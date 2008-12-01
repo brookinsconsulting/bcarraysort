@@ -1,0 +1,234 @@
+INSTALL - BC FTCtW
+================================
+
+
+Installation instructions
+===================================
+
+A brief guide to installing the extension
+and configuring the group calendar solution.
+
+
+Getting started
+=======================
+
+0) Read the installation requirements
+   These are located in doc/README
+
+
+1) Download the required extensions
+
+   From: http://projects.ez.no/bceventfilter
+   From: http://projects.ez.no/bceventnotifications
+
+
+2) Unpack extension
+
+   Destination: extension/bcftctw
+   Destination: extension/bceventfilter
+   Destination: extension/bceventnotifications
+
+
+3) Install the extension 
+
+   Destination: extension/bcftctw
+   Destination: extension/bceventfilter
+   Destination: extension/bceventnotifications
+
+
+
+4) Extension Activation
+
+   In this case all the site settings required are provided within the bcftctw extension.
+
+   Simply create symbolic links to install and use these override 
+   and siteaccess settings. Here are the installation commands.
+
+   # cd /path/to/ezpublish;
+   # cd settings/; 
+   # mv override .override; 
+   # ln -s ../extension/bcftctw/settings/4.0.0/override .;
+
+   Remember to edit the settings/override/site.ini.append.php and add entries
+   for your virtual host name mappings to the user and admin siteaccesses.
+
+   # cd settings/siteaccess;
+   # ln -s ../../extension/bcftctw/settings/4.0.0/siteaccess/ftctw_user . ; 
+   # ln -s ../../extension/bcftctw/settings/4.0.0/siteaccess/ftctw_admin . ; 
+
+   Also remember you may need to edit any settings files which specify: content object ids,
+   node ids or content class identifiers only if they have changed upon installation of packages
+   later in these instructions. Here are the key settings files which contain these unique identifiers.
+
+   File: extension/bceventfilter/settings/override.ini.append.php
+   File: extension/bceventfilter/settings/bceventfilter.ini.append.php
+   File: extension/bceventnotifications/settings/bceventnotifications.ini.append.php
+
+
+5) Regenerating Siteaccess Autoloads
+
+   To Enable / Activate the extensions you will need to run this 
+   shell command to re-generate extension autoload cache.
+
+   These commands I have found to be more effective than the admin
+   for regenerating the autoload cache per siteacess. The admin tool
+   is restricted per siteaccess and all available autoload information
+   is not process the same as with the following shell command.
+
+   # php ./bin/php/ezpgenerateautoloads.php -v -e
+
+
+6) Clearing all cache
+
+   You may need to run the this shell command to re-generate extension autoload cache.
+
+   # php ./bin/php/ezcache.php --clear-all
+
+   Using the normal process to activate an extension via global or per siteaccess settings.
+
+   References,
+   http://ezpedia.org/wiki/en/ez/learning_how_to_create_a_design_extension#eztoc946_3
+   http://ez.no/doc/extensions/database/1_4/installation#enable
+
+
+7) Install and configure custom classes
+
+   This extension is designed with the expectation of the following attributes / datatypes in the 'product' and 'user' classes and objects.
+
+   To provide for custom production event class
+   To provide for custom user class user attribute 'recieve_event_notifications' (ezcheckbox, default checked).
+   To provide for custom event calendar content subtree example content objects
+   To provide for custom feedback_form content object
+
+   This extension provides the very same packages of classes 
+   used in the creation of this extension as an example and reference.
+
+   Packages Directory: extension/bceventfilter/packages
+
+   Login to the admin and install these packages in the following order.
+
+   Package: extension/bceventfilter/packages/classes/production_event-1.0-1(2).ezpkg
+   Package: extension/bceventfilter/packages/classes/user-1.0-1.ezpkg
+   Package: extension/bceventfilter/packages/objects/events-1.0-1.ezpkg
+   Package: extension/bceventfilter/packages/objects/events_feedback-1.1-1.ezpkg
+
+   Directory: extension/bceventfilter/packages
+   |-- classes
+   |   |-- production_event-1.0-1(2).ezpkg
+   |   `-- user-1.0-1.ezpkg
+   `-- objects
+       |-- events-1.0-1.ezpkg
+       `-- events_feedback-1.1-1.ezpkg
+
+
+8) Install extension settings override
+
+    Settings are provided and can be found within each extension.
+
+    Directory: extension/bceventfilter/settings
+    Directory: extension/bceventnotifications/settings
+    Directory: extension/bcftctw/settings
+
+    Key settings for this solution can be found within each of the following files.
+
+    Directory: extension/bceventfilter/settings
+    File: extension/bceventnotifications/settings/cronjob.ini.append.php
+    File: extension/bceventfilter/settings/override.ini.append.php
+    File: extension/bceventfilter/settings/bceventfilter.ini.append.php
+    File: extension/bceventnotifications/settings/bceventnotifications.ini.append.php
+
+    Install copies of the default extension settings overide files
+    within your own installations override settings directory
+    and customize these files as needed.
+
+    File: extension/bceventfilter/settings/bceventfilter.ini.append.php
+    Destination: settings/override/bceventfilter.ini.append.php
+
+    File: extension/bceventfilter/settings/bceventnotifications.ini.append.php
+    Destination: settings/override/bceventnotifications.ini.append.php
+
+    File: extension/bceventfilter/settings/cronjob.ini.append.php
+    Destination: settings/override/cronjob.ini.append.php
+
+    Customize settings (IDs) to match your own. These will be different.
+
+
+9) Configure Group / Role Permissions
+
+    You will require a at least one guest group and one premium group.
+
+    Here is an example set of permissions, your permissions will be different.
+
+    Example #1
+
+    Name: Anonymous
+    Policies [7]
+    Module  Function        Limitation
+
+    *Default Policies*
+
+    Name: Member
+    Policies [13]
+    Module  Function        Limitation
+
+    content         create  Class( Forum topic ) , Section( Standard ) , ParentClass( Forum )
+    content         create  Class( Forum reply ) , Section( Standard ) , ParentClass( Forum topic )
+    content         create  Class( Comment ) , Section( Standard ) , ParentClass( Article , Article (main-page) , Blog post )
+    content         edit    Class( Comment , Forum topic , Forum reply ) , Section( Standard ) , Owner( Self )
+    user    selfedit        No limitations
+    notification    use     No limitations
+    shop    buy     No limitations
+    user    password        No limitations
+    content         create  Class( Production Event ) , Section( Standard ) , ParentClass( Folder , Event calendar )
+    websitetoolbar  use     Class( Event calendar , Production Event )
+    rss     feed    No limitations
+    content         edit    Class( Production Event ) , Section( Standard ) , Owner( Self )
+    ezdhtml         all functions   No limitations
+
+
+10) Install / Configure eZ Publish Cronjob Part System
+    
+    Add cron/crontab as webserver user. You may wish to test
+    the cronjob command first. Here are two examples
+
+    Note: These commands are designed to only be run once per hour.
+
+    Example #1 - Example run a specific cronjob per siteaccess
+
+        # ./runcronjobs.php -dc event_start_notifications
+        # ./runcronjobs.php -dc event_end_notifications
+
+    Example #2 - Example run all cronjobs per siteaccess
+
+        # ./runcronjobs.php -s ftctw_user -dc| less
+
+    Example #3 - Example crontab entry to run every hour
+
+        03 * * * cd /var/www/html && /bin/php runcronjobs.php event_start_notifications -q -s ftctw_user 2>&1
+        58 * * * cd /var/www/html && /bin/php runcronjobs.php event_end_notifications -q -s ftctw_user 2>&1
+
+    References,
+    http://ez.no/doc/ez_publish/technical_manual/3_9/features/cronjobs/configuring_cronjobs
+    http://ez.no/doc/ez_publish/technical_manual/3_9/features/cronjobs/the_cronjob_scripts
+    http://ez.no/doc/ez_publish/technical_manual/3_9/features/cronjobs/running_cronjobs
+
+
+11) Clear Cache
+
+    Example #1
+        # php ./bin/php/ezcache.php --clear-all
+
+
+12) Test
+
+    Test the newly configured extension features within your installation.
+
+
+13) Optional - Content aproval solutions
+
+    Optional. If you are in need of content aproval.
+    Download and install suggested the following extensions.
+
+    Suggestion: Flexible content aproval workflow solutions using eZ Approve2
+
+

@@ -1,0 +1,75 @@
+README - BC Simple Subscription
+===============================
+
+
+What is the BC Simple Subscription extension?
+=============================================
+
+Provides for Simple User Subscription Shop Solution
+
+eZ Network Guidelines label this extension as type 'D'.
+
+
+Version
+=======
+
+The current version of BC Simple Subscription is 1.0.1.
+Last Updated: October 30, 2007
+
+You can find details about changes for this
+version in doc/changelogs/CHANGELOG-1.0.1
+
+
+License
+=======
+
+Written and copyrighted by Brookins Consulting 2007
+
+This software is licensed under the GNU General Public License.
+
+The complete license agreement is included in the doc/LICENSE file.
+
+For more information or questions please contact license@brookinsconsulting.com
+
+
+Requirements
+============
+
+The following requirements exists for using the extension:
+
+o  eZ publish version:
+
+   Make sure you use eZ publish version 3.8 or higher.
+
+o  PHP version:
+
+   Make sure you have PHP 4.4.x or higher.
+
+o  eZ publish must be reachable from the internet:
+
+   Make sure you have installed eZ publish on a webserver
+   that is reachable by users on the internet.
+
+
+Installation
+============
+
+Details on installing the extension located in the file doc/INSTALL.
+
+
+Troubleshooting
+===============
+
+1. Read the FAQ
+   ------------
+
+   Some problems are more common than others. The most common ones
+   are listed in the the FAQ.
+
+2. Support
+   -------
+
+   If you have find any problems not handled by this document or the FAQ you
+   can contact Brookins Consulting through the support system:
+   http://brookinsconsulting.com/contact
+
